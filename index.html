@@ -6,69 +6,110 @@
 <title>Salsa On1 Lead Guide</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { min-height: 100vh; background: #0a0a0f; font-family: Georgia, serif; color: #f0e6d3; }
 
-  body {
-    min-height: 100vh;
-    background: #0a0a0f;
-    font-family: Georgia, serif;
-    color: #f0e6d3;
-  }
-
-  /* HEADER */
+  /* ── HEADER ── */
   .header {
     background: linear-gradient(135deg, #1a0a05 0%, #0f0520 100%);
     border-bottom: 1px solid #3a1a0a;
-    padding: 28px 32px 20px;
-    position: relative;
-    overflow: hidden;
+    padding: 24px 32px 18px; position: relative; overflow: hidden;
   }
   .header::before {
-    content: '';
-    position: absolute; top:0; left:0; right:0; bottom:0;
+    content: ''; position: absolute; inset: 0;
     background: radial-gradient(ellipse at 20% 50%, rgba(255,107,53,0.08), transparent 60%),
                 radial-gradient(ellipse at 80% 50%, rgba(224,64,251,0.06), transparent 60%);
     pointer-events: none;
   }
   .header-label { font-size: 11px; letter-spacing: 4px; color: #FF6B35; text-transform: uppercase; margin-bottom: 4px; }
-  .header h1 { font-size: clamp(22px, 4vw, 36px); font-weight: 400; letter-spacing: -0.5px; color: #fff; }
-  .header p { margin-top: 6px; font-size: 13px; color: #a08878; letter-spacing: 0.5px; }
+  .header h1 { font-size: clamp(20px, 3.5vw, 34px); font-weight: 400; letter-spacing: -0.5px; color: #fff; }
+  .header p { margin-top: 5px; font-size: 13px; color: #a08878; letter-spacing: 0.5px; }
 
-  /* LAYOUT */
-  .layout { display: flex; height: calc(100vh - 120px); overflow: hidden; }
+  /* ── LAYOUT ── */
+  .layout { display: flex; height: calc(100vh - 110px); overflow: hidden; }
 
-  /* SIDEBAR */
+  /* ── SIDEBAR ── */
   .sidebar {
-    width: 220px; min-width: 220px;
-    background: #0d0d18;
-    border-right: 1px solid #1e1e30;
-    padding: 20px 14px;
+    width: 230px; min-width: 230px;
+    background: #0a0a14;
+    border-right: 1px solid #1a1a2e;
+    padding: 18px 14px;
     overflow-y: auto;
+    display: flex; flex-direction: column; gap: 22px;
   }
-  .mobile-filter-bar { display: none; }
+  .sb-section-title {
+    font-size: 9px; letter-spacing: 3px; color: #444;
+    text-transform: uppercase; margin-bottom: 9px;
+  }
 
-  /* MAIN */
-  .main { flex: 1; padding: 24px; overflow-y: auto; min-width: 0; }
+  /* Category chips */
+  .cat-chips { display: flex; flex-direction: column; gap: 3px; }
+  .cat-chip {
+    display: flex; align-items: center; gap: 9px;
+    padding: 7px 10px; border-radius: 7px;
+    border: 1px solid transparent;
+    cursor: pointer; font-family: Georgia, serif;
+    font-size: 12px; color: #666;
+    background: transparent;
+    transition: all 0.15s; text-align: left; width: 100%;
+  }
+  .cat-chip:hover { color: #bbb; background: rgba(255,255,255,0.04); border-color: #252535; }
+  .cat-chip.active { color: #e8ddd0; background: rgba(255,255,255,0.07); border-color: #35354a; }
+  .cat-chip-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .cat-chip-label { flex: 1; }
+  .cat-chip-count {
+    font-size: 10px; color: #3a3a55;
+    background: rgba(255,255,255,0.04);
+    padding: 1px 6px; border-radius: 8px; min-width: 22px; text-align: center;
+  }
+  .cat-chip.active .cat-chip-count { color: #666; background: rgba(255,255,255,0.07); }
 
-  /* DETAIL CARD */
+  /* Level toggles */
+  .level-toggles { display: flex; flex-direction: column; gap: 3px; }
+  .level-btn {
+    display: flex; align-items: center; gap: 9px;
+    padding: 7px 10px; border-radius: 7px;
+    border: 1px solid transparent;
+    cursor: pointer; font-family: Georgia, serif;
+    font-size: 12px; color: #666;
+    background: transparent; width: 100%;
+    transition: all 0.15s; text-align: left;
+  }
+  .level-btn:hover { color: #bbb; background: rgba(255,255,255,0.04); border-color: #252535; }
+  .level-btn.active { color: #e8ddd0; background: rgba(255,255,255,0.07); border-color: #35354a; }
+  .level-pip { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+
+  /* Info box */
+  .info-box {
+    padding: 11px 12px;
+    background: rgba(255,107,53,0.05);
+    border: 1px solid rgba(255,107,53,0.12);
+    border-radius: 8px;
+    font-size: 11px; color: #776655; line-height: 1.65;
+  }
+  .info-box strong { color: #FF6B35; display: block; margin-bottom: 4px; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; }
+
+  /* ── MAIN ── */
+  .main { flex: 1; padding: 22px 24px; overflow-y: auto; min-width: 0; }
+
+  /* ── DETAIL CARD ── */
   .detail-card {
-    border-radius: 12px; padding: 20px 24px;
-    margin-bottom: 28px; position: relative; overflow: hidden;
+    border-radius: 12px; padding: 18px 22px;
+    margin-bottom: 16px;
     transition: border-color 0.3s, background 0.3s;
   }
   .detail-card-inner { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; }
-  .detail-badge { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .detail-badge { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; }
   .detail-dot { width: 10px; height: 10px; border-radius: 50%; }
   .detail-cat-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; }
-  .detail-name { font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 8px; }
+  .detail-name { font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 7px; }
   .detail-desc { font-size: 14px; color: #b09080; line-height: 1.6; max-width: 560px; }
   .timing-box {
     background: rgba(0,0,0,0.3); border: 1px solid #2a2a3a;
-    border-radius: 8px; padding: 12px 18px; text-align: center; min-width: 100px;
+    border-radius: 8px; padding: 11px 17px; text-align: center; min-width: 100px;
   }
-  .timing-label { font-size: 10px; letter-spacing: 2px; color: #555; text-transform: uppercase; margin-bottom: 4px; }
+  .timing-label { font-size: 9px; letter-spacing: 2px; color: #555; text-transform: uppercase; margin-bottom: 4px; }
   .timing-value { font-size: 13px; color: #FF6B35; font-family: monospace; letter-spacing: 1px; }
-
-  .flows-label { font-size: 10px; letter-spacing: 2px; color: #555; text-transform: uppercase; margin: 16px 0 10px; }
+  .flows-label { font-size: 9px; letter-spacing: 2px; color: #555; text-transform: uppercase; margin: 14px 0 9px; }
   .flows-container { display: flex; flex-wrap: wrap; gap: 8px; }
   .flow-pill {
     padding: 5px 12px; border-radius: 20px; border: 1px solid;
@@ -76,147 +117,153 @@
     font-family: Georgia, serif; background: transparent;
   }
 
-  /* VIDEO OUTER — sits below detail card */
-  .video-outer {
-    width: 1024px;
-    max-width: 100%;
-    margin-bottom: 24px;
-  }
-  /* thumb wrapper: fixed 1024×576 (16:9) on desktop */
-  .yt-thumb-wrap {
-    position: relative; border-radius: 10px; overflow: hidden;
-    border: 1px solid #2a2a3a; cursor: pointer;
-    width: 1024px; max-width: 100%;
+  /* ── VIDEO ── */
+  .video-outer { margin-bottom: 20px; max-width: 1024px; }
+
+  /* Thumbnail — aspect-ratio 16:9, fills video-outer width */
+  .yt-thumb {
+    position: relative;
+    width: 100%;
     aspect-ratio: 16 / 9;
+    border-radius: 10px; overflow: hidden;
+    border: 1px solid #2a2a3a;
     background: #000;
+    cursor: pointer;
+    display: block;
   }
-  .yt-thumb-wrap img {
-    width: 100%; height: 100%; object-fit: cover; display: block;
+  .yt-thumb img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
   }
+  /* Overlay — pointer-events:none so clicks reach the .yt-thumb div */
   .yt-play-overlay {
     position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
-    background: rgba(0,0,0,0.35); pointer-events: none;
+    background: rgba(0,0,0,0.32);
+    pointer-events: none;
     transition: background 0.15s;
   }
-  .yt-thumb-wrap:hover .yt-play-overlay { background: rgba(0,0,0,0.1); }
+  .yt-thumb:hover .yt-play-overlay { background: rgba(0,0,0,0.08); }
   .yt-play-circle {
-    width: 80px; height: 80px; background: rgba(255,0,0,0.9);
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    width: 76px; height: 76px;
+    background: rgba(210,0,0,0.92);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
   }
   .yt-play-arrow {
     width: 0; height: 0; border-style: solid;
-    border-width: 15px 0 15px 30px;
+    border-width: 14px 0 14px 28px;
     border-color: transparent transparent transparent #fff;
     margin-left: 6px;
   }
   .yt-stamp {
     position: absolute; bottom: 10px; right: 12px;
-    background: rgba(0,0,0,0.75); color: #fff;
-    font-size: 12px; padding: 3px 8px; border-radius: 4px;
-    font-family: Georgia, serif;
+    background: rgba(0,0,0,0.78); color: #fff;
+    font-size: 11px; padding: 2px 8px; border-radius: 4px;
+    font-family: Georgia, serif; pointer-events: none;
   }
-  .yt-open-link {
-    display: block; text-align: right; margin-top: 5px;
-    font-size: 12px; color: #666; text-decoration: none;
-  }
-  .yt-open-link:hover { color: #FF6B35; }
-  .yt-video-label {
-    font-size: 11px; color: #888; margin-bottom: 6px; letter-spacing: 0.5px;
-  }
-  /* iframe player replaces thumb, same size */
-  .yt-iframe-wrap {
-    position: relative; width: 1024px; max-width: 100%;
-    aspect-ratio: 16/9; border-radius: 10px; overflow: hidden;
+  /* After clicking, thumb div is replaced by .yt-iframe */
+  .yt-iframe {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px; overflow: hidden;
     border: 1px solid #2a2a3a;
+    background: #000;
   }
-  .yt-iframe-wrap iframe {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
+  .yt-iframe iframe {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; border: 0;
   }
+  .yt-link {
+    display: block; text-align: right; margin-top: 4px;
+    font-size: 11px; color: #555; text-decoration: none;
+    transition: color 0.15s;
+  }
+  .yt-link:hover { color: #FF6B35; }
+  .yt-vid-label { font-size: 11px; color: #777; margin-bottom: 6px; }
+  .yt-second { margin-top: 14px; }
+  .watch-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 7px 16px; border-radius: 20px;
+    background: rgba(255,107,53,0.1);
+    border: 1px solid rgba(255,107,53,0.35);
+    color: #FF6B35; font-size: 12px; text-decoration: none;
+    font-family: Georgia, serif; transition: background 0.15s;
+  }
+  .watch-btn:hover { background: rgba(255,107,53,0.22); }
 
-  /* GRID */
-  .grid-label { font-size: 10px; letter-spacing: 3px; color: #444; text-transform: uppercase; margin-bottom: 16px; }
-  .moves-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
-    gap: 10px;
-  }
+  /* ── GRID ── */
+  .grid-label { font-size: 9px; letter-spacing: 3px; color: #444; text-transform: uppercase; margin-bottom: 14px; }
+  .moves-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 10px; }
   .move-card {
-    padding: 14px 16px; border-radius: 8px; border: 1px solid #1e1e2e;
-    background: #0d0d18; cursor: pointer; position: relative;
-    transition: all 0.2s;
+    padding: 13px 15px; border-radius: 8px; border: 1px solid #1e1e2e;
+    background: #0d0d18; cursor: pointer; position: relative; transition: all 0.2s;
   }
-  .move-card:hover { border-color: rgba(255,255,255,0.2); }
-  .move-card.dimmed { opacity: 0.3; }
-  .card-indicator {
-    position: absolute; top: 8px; right: 8px;
-    width: 6px; height: 6px; border-radius: 50%;
-  }
+  .move-card:hover { border-color: rgba(255,255,255,0.18); }
+  .move-card.dimmed { opacity: 0.28; }
+  .card-indicator { position: absolute; top: 8px; right: 8px; width: 6px; height: 6px; border-radius: 50%; }
   .card-arrow { position: absolute; top: 8px; right: 10px; font-size: 10px; }
-  .card-level-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .card-level-row { display: flex; align-items: center; gap: 7px; margin-bottom: 5px; }
   .card-level-dot { width: 6px; height: 6px; border-radius: 1px; flex-shrink: 0; }
   .card-level-text { font-size: 10px; color: #555; letter-spacing: 1px; }
   .card-name { font-size: 13px; color: #d0c0b0; font-weight: 500; line-height: 1.3; }
-  .card-name.selected-name { color: #fff; }
+  .card-name.sel { color: #fff; }
   .card-cat { font-size: 10px; color: #555; margin-top: 4px; }
 
-  /* SEQUENCES */
-  .sequences-box {
-    margin-top: 32px; padding: 16px 20px;
-    background: #0d0d18; border: 1px solid #1e1e2e; border-radius: 8px;
-  }
-  .seq-label { font-size: 10px; letter-spacing: 3px; color: #444; text-transform: uppercase; margin-bottom: 12px; }
-  .seq-row { margin-bottom: 10px; font-size: 11px; }
+  /* ── SEQUENCES ── */
+  .sequences-box { margin-top: 28px; padding: 15px 20px; background: #0d0d18; border: 1px solid #1e1e2e; border-radius: 8px; }
+  .seq-label { font-size: 9px; letter-spacing: 3px; color: #444; text-transform: uppercase; margin-bottom: 11px; }
+  .seq-row { margin-bottom: 9px; font-size: 11px; }
   .seq-name { color: #FF6B35; margin-right: 10px; }
   .seq-step { color: #888; }
   .seq-arrow { color: #333; margin: 0 4px; }
 
-  /* ── MOBILE ── */
+  /* ── MOBILE FILTER BAR ── */
+  .mobile-filter-bar { display: none; }
+
+  /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
     .layout { flex-direction: column; height: auto; overflow: visible; }
-
     .sidebar { display: none; }
+
     .mobile-filter-bar {
-      display: flex; overflow-x: auto; gap: 8px;
-      padding: 10px 14px; background: #0d0d18;
-      border-bottom: 1px solid #1e1e30;
+      display: flex; flex-direction: column;
+      background: #0a0a14; border-bottom: 1px solid #1a1a2e;
+    }
+    .mob-scroll {
+      display: flex; overflow-x: auto; gap: 6px;
+      padding: 8px 12px;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
     }
-    .mobile-filter-bar::-webkit-scrollbar { display: none; }
-    .mobile-filter-bar .mob-filter-btn {
+    .mob-scroll::-webkit-scrollbar { display: none; }
+    .mob-divider { height: 1px; background: #14141e; }
+    .mob-chip {
       white-space: nowrap; flex-shrink: 0;
-      padding: 6px 14px; border-radius: 20px;
-      border: 1px solid #2a2a3a; font-size: 12px;
-      color: #777; background: transparent;
+      padding: 5px 13px; border-radius: 16px;
+      border: 1px solid #252535; font-size: 12px;
+      color: #666; background: transparent;
       font-family: Georgia, serif; cursor: pointer;
+      transition: all 0.15s;
     }
-    .mobile-filter-bar .mob-filter-btn.active {
-      background: rgba(255,107,53,0.15); border-color: #FF6B35; color: #FF6B35;
-    }
+    .mob-chip.active { background: rgba(255,107,53,0.15); border-color: #FF6B35; color: #FF6B35; }
 
-    .header { padding: 14px 16px; }
-    .header h1 { font-size: 20px; }
-    .header p { font-size: 12px; }
-
+    .header { padding: 13px 15px; }
+    .header h1 { font-size: 19px; }
+    .header p { font-size: 11px; }
     .main { padding: 12px; }
-
-    .detail-card { padding: 14px; margin-bottom: 12px; }
+    .detail-card { padding: 13px; margin-bottom: 12px; }
     .detail-card-inner { flex-direction: column; gap: 8px; }
-    .detail-name { font-size: 18px; }
+    .detail-name { font-size: 17px; }
     .detail-desc { font-size: 13px; max-width: 100%; }
-    .timing-box { align-self: flex-start; padding: 8px 14px; }
-
-    /* Video: full width on mobile */
-    .video-outer { width: 100%; margin-bottom: 16px; }
-    .yt-thumb-wrap { width: 100%; }
-    .yt-play-circle { width: 52px; height: 52px; }
+    .timing-box { align-self: flex-start; }
+    .video-outer { max-width: 100%; margin-bottom: 14px; }
+    .yt-play-circle { width: 54px; height: 54px; }
     .yt-play-arrow { border-width: 10px 0 10px 20px; margin-left: 4px; }
-    .yt-iframe-wrap { width: 100%; }
-
-    .moves-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
-    .move-card { padding: 10px 12px; }
-
+    .moves-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 7px; }
+    .move-card { padding: 10px 11px; }
     .sequences-box { display: none; }
   }
 </style>
@@ -226,42 +273,92 @@
 <div class="header">
   <div class="header-label">Salsa On1 · Lead Guide</div>
   <h1>Move Connection Map</h1>
-  <p>Click any move to see what it flows into · Use category filters to explore</p>
+  <p>Click any move to see what it flows into · Use filters to explore</p>
+</div>
+
+<!-- Mobile filter bar (hidden on desktop via CSS) -->
+<div class="mobile-filter-bar">
+  <div class="mob-scroll" id="mob-cat-row">
+    <button class="mob-chip active" data-cat="all"        onclick="setCat('all',this,true)">All</button>
+    <button class="mob-chip"        data-cat="foundation" onclick="setCat('foundation',this,true)">⬡ Foundation</button>
+    <button class="mob-chip"        data-cat="turns"      onclick="setCat('turns',this,true)">↺ Turns</button>
+    <button class="mob-chip"        data-cat="patterns"   onclick="setCat('patterns',this,true)">◈ Patterns</button>
+    <button class="mob-chip"        data-cat="footwork"   onclick="setCat('footwork',this,true)">◇ Footwork</button>
+    <button class="mob-chip"        data-cat="variations" onclick="setCat('variations',this,true)">⬡ Variations</button>
+    <button class="mob-chip"        data-cat="styling"    onclick="setCat('styling',this,true)">✦ Styling</button>
+  </div>
+  <div class="mob-divider"></div>
+  <div class="mob-scroll" id="mob-lvl-row">
+    <button class="mob-chip active" data-lvl="all"          onclick="setLevel('all',this,true)">All Levels</button>
+    <button class="mob-chip"        data-lvl="Beginner"     onclick="setLevel('Beginner',this,true)">● Beginner</button>
+    <button class="mob-chip"        data-lvl="Intermediate" onclick="setLevel('Intermediate',this,true)">● Intermediate</button>
+  </div>
 </div>
 
 <div class="layout">
-
-  <!-- Mobile filter bar (hidden on desktop) -->
-  <div class="mobile-filter-bar" id="mobile-filter-bar">
-    <button class="mob-filter-btn active" onclick="setFilter('all', this, true)">All</button>
-    <button class="mob-filter-btn" onclick="setFilter('foundation', this, true)">⬡ Foundation</button>
-    <button class="mob-filter-btn" onclick="setFilter('turns', this, true)">↺ Turns</button>
-    <button class="mob-filter-btn" onclick="setFilter('patterns', this, true)">◈ Patterns</button>
-    <button class="mob-filter-btn" onclick="setFilter('footwork', this, true)">◇ Footwork</button>
-    <button class="mob-filter-btn" onclick="setFilter('variations', this, true)">⬡ Variations</button>
-    <button class="mob-filter-btn" onclick="setFilter('styling', this, true)">✦ Styling</button>
-  </div>
-
   <div class="sidebar">
-    <div class="sidebar-section-label" style="margin-bottom:10px">Filter by Type</div>
-    <button class="filter-btn active" data-cat="all" onclick="setFilter('all', this)">All Moves <span class="count" id="count-all"></span></button>
-    <button class="filter-btn" data-cat="foundation" onclick="setFilter('foundation', this)">⬡ Foundation <span class="count" id="count-foundation"></span></button>
-    <button class="filter-btn" data-cat="turns" onclick="setFilter('turns', this)">↺ Turns <span class="count" id="count-turns"></span></button>
-    <button class="filter-btn" data-cat="patterns" onclick="setFilter('patterns', this)">◈ Patterns <span class="count" id="count-patterns"></span></button>
-    <button class="filter-btn" data-cat="footwork" onclick="setFilter('footwork', this)">◇ Footwork <span class="count" id="count-footwork"></span></button>
-    <button class="filter-btn" data-cat="variations" onclick="setFilter('variations', this)">⬡ Variations <span class="count" id="count-variations"></span></button>
-    <button class="filter-btn" data-cat="styling" onclick="setFilter('styling', this)">✦ Styling / Accents <span class="count" id="count-styling"></span></button>
 
-    <div style="margin: 24px 0 10px">
-      <div class="sidebar-section-label">Level</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#FF6B35"></div>Beginner</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#E040FB"></div>Intermediate</div>
+    <div>
+      <div class="sb-section-title">Category</div>
+      <div class="cat-chips" id="cat-chips">
+        <button class="cat-chip active" data-cat="all" onclick="setCat('all',this)">
+          <span class="cat-chip-dot" style="background:#666"></span>
+          <span class="cat-chip-label">All Moves</span>
+          <span class="cat-chip-count" id="count-all"></span>
+        </button>
+        <button class="cat-chip" data-cat="foundation" onclick="setCat('foundation',this)">
+          <span class="cat-chip-dot" style="background:#FF6B35"></span>
+          <span class="cat-chip-label">⬡ Foundation</span>
+          <span class="cat-chip-count" id="count-foundation"></span>
+        </button>
+        <button class="cat-chip" data-cat="turns" onclick="setCat('turns',this)">
+          <span class="cat-chip-dot" style="background:#E040FB"></span>
+          <span class="cat-chip-label">↺ Turns</span>
+          <span class="cat-chip-count" id="count-turns"></span>
+        </button>
+        <button class="cat-chip" data-cat="patterns" onclick="setCat('patterns',this)">
+          <span class="cat-chip-dot" style="background:#FF9800"></span>
+          <span class="cat-chip-label">◈ Patterns</span>
+          <span class="cat-chip-count" id="count-patterns"></span>
+        </button>
+        <button class="cat-chip" data-cat="footwork" onclick="setCat('footwork',this)">
+          <span class="cat-chip-dot" style="background:#00BCD4"></span>
+          <span class="cat-chip-label">◇ Footwork</span>
+          <span class="cat-chip-count" id="count-footwork"></span>
+        </button>
+        <button class="cat-chip" data-cat="variations" onclick="setCat('variations',this)">
+          <span class="cat-chip-dot" style="background:#4CAF50"></span>
+          <span class="cat-chip-label">⬡ Variations</span>
+          <span class="cat-chip-count" id="count-variations"></span>
+        </button>
+        <button class="cat-chip" data-cat="styling" onclick="setCat('styling',this)">
+          <span class="cat-chip-dot" style="background:#FFEB3B"></span>
+          <span class="cat-chip-label">✦ Styling</span>
+          <span class="cat-chip-count" id="count-styling"></span>
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <div class="sb-section-title">Level</div>
+      <div class="level-toggles" id="level-toggles">
+        <button class="level-btn active" data-lvl="all" onclick="setLevel('all',this)">
+          <span class="level-pip" style="background:#555"></span>All Levels
+        </button>
+        <button class="level-btn" data-lvl="Beginner" onclick="setLevel('Beginner',this)">
+          <span class="level-pip" style="background:#FF6B35"></span>Beginner
+        </button>
+        <button class="level-btn" data-lvl="Intermediate" onclick="setLevel('Intermediate',this)">
+          <span class="level-pip" style="background:#E040FB"></span>Intermediate
+        </button>
+      </div>
     </div>
 
     <div class="info-box">
-      <strong>How to use:</strong>
-      Select a move to see which moves it naturally leads into (highlighted). Build sequences by chaining connections.
+      <strong>How to use</strong>
+      Click a move to highlight what it flows into. Chain connections to build sequences.
     </div>
+
   </div>
 
   <div class="main">
@@ -284,7 +381,6 @@
       <div class="flows-container" id="flows-container"></div>
     </div>
 
-    <!-- Video section: full width below detail card, capped at 1024px on desktop -->
     <div id="video-container" class="video-outer"></div>
 
     <div class="grid-label" id="grid-label"></div>
@@ -301,56 +397,61 @@
 
 <script>
 const categories = {
-  foundation: { label: "Foundation", color: "#FF6B35", icon: "⬡" },
-  turns:      { label: "Turns",      color: "#E040FB", icon: "↺" },
-  patterns:   { label: "Patterns",   color: "#FF9800", icon: "◈" },
-  footwork:   { label: "Footwork",   color: "#00BCD4", icon: "◇" },
-  variations: { label: "Variations", color: "#4CAF50", icon: "⬡" },
-  styling:    { label: "Styling / Accents", color: "#FFEB3B", icon: "✦" },
+  foundation: { label:"Foundation", color:"#FF6B35", icon:"⬡" },
+  turns:      { label:"Turns",      color:"#E040FB", icon:"↺" },
+  patterns:   { label:"Patterns",   color:"#FF9800", icon:"◈" },
+  footwork:   { label:"Footwork",   color:"#00BCD4", icon:"◇" },
+  variations: { label:"Variations", color:"#4CAF50", icon:"⬡" },
+  styling:    { label:"Styling",    color:"#FFEB3B", icon:"✦" },
 };
 
 const moves = {
-  basic:         { id:"basic",         name:"Basic Step",             category:"foundation", description:"The foundation of salsa on1. Lead breaks forward on count 1 with the left foot, then back on count 5 with the right. All patterns return here.",                                                                                                      timing:"1-2-3 / 5-6-7",   level:"Beginner",     video:"https://www.addicted2salsa.com/videos/the-salsa-dancing-basic-step/",                                      youtube:"BDODx6qVuRg", leadsTo:["crossbody","rightTurn","leftTurn","openBreak","sidestep"] },
-  crossbody:     { id:"crossbody",     name:"Cross Body Lead",        category:"foundation", description:"Lead steps sideways off the line of dance to let the follow walk across in front, switching sides. The most essential move in LA-style salsa.",                                                                                                       timing:"1-2-3-4-5-6-7",   level:"Beginner",     video:"https://www.addicted2salsa.com/videos/basic-cross-body-lead-in-salsa/",                                    youtube:"gBcaVdrJ0Do", leadsTo:["basic","diledobleCBL","CBLwithTurn","dip","hammerlock"] },
-  rightTurn:     { id:"rightTurn",     name:"Right Turn (Follow)",    category:"turns",      description:"An outside turn. Lead uses their left hand (holding follow's right hand) and sweeps it away from the follow's body and around her head, signalling her to turn clockwise underneath. Led on count 5.",                                                 timing:"5-6-7",           level:"Beginner",     video:"https://www.addicted2salsa.com/videos/basic-right-turn-in-salsa-dance/",                                   youtube:"vrobjqMP3ps", youtube2:"y64Ynur-veU", youtube2Start:99, youtube2End:191, leadsTo:["basic","crossbody","comb","copa"] },
-  leftTurn:      { id:"leftTurn",      name:"Left Turn (Follow)",     category:"turns",      description:"An inside turn. Lead uses their left hand (holding follow's right hand) and guides it across the follow's own body and around her head — the opposite arc to the right turn — signalling her to turn counter-clockwise. Led on count 6, turn executes on 1-2-3.", timing:"1-2-3",  level:"Beginner",     video:"https://www.addicted2salsa.com/videos/cross-body-lead-with-turn/",                                         youtube:"t-xMpLfSXKQ", leadsTo:["basic","crossbody","handshakeTurn"] },
-  openBreak:     { id:"openBreak",     name:"Open Break",             category:"foundation", description:"Both partners break away from each other on count 1, creating space and tension before reconnecting. A useful reset between patterns.",                                                                                                               timing:"1-2-3 / 5-6-7",   level:"Beginner",     video:"https://www.addicted2salsa.com/videos/basic-salsa-dance-elements-and-steps/",                              leadsTo:["basic","rightTurn","leftTurn","hammerlock"] },
-  sidestep:      { id:"sidestep",      name:"Side Step / Suzie Q",    category:"footwork",   description:"Lateral weight shifts with hip styling. A simple but effective way to add flavor and change direction without leaving the basic framework.",                                                                                                          timing:"1-2-3 / 5-6-7",   level:"Beginner",     video:"https://www.addicted2salsa.com/videos/free-salsa-video-lesson-for-beginners/",                             leadsTo:["basic","crossbody"] },
-  diledobleCBL:  { id:"diledobleCBL",  name:"Double Cross Body",      category:"variations", description:"Two cross body leads performed back-to-back in succession. The second begins as the first completes, creating a flowing, traveling pattern.",                                                                                                         timing:"1…7 / 1…7",       level:"Intermediate", video:"https://www.addicted2salsa.com/videos/cross-body-lead-180-pocket-version/",                                 leadsTo:["basic","hammerlock","CBLwithTurn"] },
-  CBLwithTurn:   { id:"CBLwithTurn",   name:"CBL with Follow Turn",   category:"turns",      description:"A cross body lead where the follow performs a 360° right (outside) turn on counts 5-6-7 after she has already crossed in front of the lead.",                                                                                                        timing:"1-2-3-4-5-6-7",   level:"Intermediate", video:"https://www.addicted2salsa.com/videos/cross-body-lead-360/",                                               leadsTo:["basic","hammerlock","copa"] },
-  hammerlock:    { id:"hammerlock",    name:"Hammerlock",             category:"patterns",   description:"Follow's right arm is guided up and behind her own back into a locked position. Typically entered from a cross body lead. Never force the arm — use gentle, clear guidance.",                                                                         timing:"1-2-3-4-5-6-7",   level:"Intermediate", video:"https://www.addicted2salsa.com/videos/basic-salsa-dance-hammerlock-hand-flick/",                           leadsTo:["basic","crossbody","hamlockTurn"] },
-  hamlockTurn:   { id:"hamlockTurn",   name:"Hammerlock Turn Out",    category:"turns",      description:"From the hammerlock, lead guides follow's trapped arm upward and forward, releasing her into a clockwise spin back to open position.",                                                                                                                timing:"5-6-7",           level:"Intermediate", video:"https://www.addicted2salsa.com/videos/salsa-dance-getting-out-of-hammerlocks-video/",                    leadsTo:["basic","crossbody","copa"] },
-  copa:          { id:"copa",          name:"Copa (In-and-Out)",      category:"patterns",   description:"Lead steps across the follow's path on count 1, creating a side-by-side hip check. Both partners step apart and back together. Also called the 'in-and-out'.",                                                                                        timing:"1-2-3-4-5-6-7",   level:"Intermediate", video:"https://www.addicted2salsa.com/videos/copa-check-salsa-bounce/",                                           leadsTo:["basic","crossbody","dip"] },
-  comb:          { id:"comb",          name:"The Comb",               category:"styling",    description:"Lead gently guides the follow's right hand (in lead's left hand) up and over the follow's own head in a smooth combing motion, then returns to hold.",                                                                                               timing:"5-6-7",           level:"Intermediate", video:"https://www.addicted2salsa.com/videos/styling-for-basic-salsa-turns/",                                      leadsTo:["basic","crossbody","rightTurn"] },
-  handshakeTurn: { id:"handshakeTurn", name:"Handshake Turn",         category:"turns",      description:"Lead switches to a right-hand-to-right-hand (handshake) grip, then guides the follow into a left (inside) turn with the right hand. Ends in an open handshake hold.",                                                                               timing:"5-6-7",           level:"Intermediate", video:"https://www.addicted2salsa.com/videos/salsa-dance-double-hand-turn-and-the-tai-chi-flip/",                leadsTo:["basic","crossbody","enchufa"] },
-  enchufa:       { id:"enchufa",       name:"Enchufla",               category:"patterns",   description:"Lead and follow simultaneously pass each other and exchange sides — lead turns right, follow turns left. A staple of Casino/Cuban salsa also widely used in LA style.",                                                                               timing:"1-2-3-4-5-6-7",   level:"Intermediate", video:"https://dancepapi.com/videos/enchufla-cuban-salsa/",                                                       leadsTo:["basic","dileQue","crossbody"] },
-  dileQue:       { id:"dileQue",       name:"Dile Que No",            category:"foundation", description:"The Cuban-style cross body lead and the backbone of Casino salsa. Lead redirects the follow across in front, both ending face-to-face again. Literally: 'tell her no'.",                                                                              timing:"1-2-3-4-5-6-7",   level:"Beginner",     video:"https://dancepapi.com/videos/enchufla-cuban-salsa/",                                                       leadsTo:["basic","enchufa","crossbody"] },
-  dip:           { id:"dip",           name:"Dip",                    category:"styling",    description:"Lead supports follow with right arm around her back as she leans back dramatically on count 1. Requires mutual trust and a well-prepared follow. Never force a dip.",                                                                                  timing:"1-2-3 hold",      level:"Intermediate", video:"https://www.addicted2salsa.com/dance/how-to-do-salsa-dips-the-way-the-ladies-like-it/",                   leadsTo:["basic","crossbody"] },
+  basic:         { id:"basic",         name:"Basic Step",           category:"foundation", level:"Beginner",     timing:"1-2-3 / 5-6-7",  description:"The foundation of salsa on1. Lead breaks forward on count 1 with the left foot, then back on count 5 with the right. All patterns return here.", video:"https://www.addicted2salsa.com/videos/the-salsa-dancing-basic-step/", youtube:"BDODx6qVuRg", leadsTo:["crossbody","rightTurn","leftTurn","openBreak","sidestep"] },
+  crossbody:     { id:"crossbody",     name:"Cross Body Lead",      category:"foundation", level:"Beginner",     timing:"1-2-3-4-5-6-7",  description:"Lead steps sideways off the line of dance to let the follow walk across in front, switching sides. The most essential move in LA-style salsa.", video:"https://www.addicted2salsa.com/videos/basic-cross-body-lead-in-salsa/", youtube:"gBcaVdrJ0Do", leadsTo:["basic","diledobleCBL","CBLwithTurn","dip","hammerlock"] },
+  rightTurn:     { id:"rightTurn",     name:"Right Turn (Follow)",  category:"turns",      level:"Beginner",     timing:"5-6-7",           description:"An outside turn. Lead uses their left hand (holding follow's right hand) and sweeps it away from the follow's body and around her head, signalling her to turn clockwise underneath. Led on count 5.", video:"https://www.addicted2salsa.com/videos/basic-right-turn-in-salsa-dance/", youtube:"vrobjqMP3ps", youtube2:"y64Ynur-veU", youtube2Start:99, youtube2End:191, leadsTo:["basic","crossbody","comb","copa"] },
+  leftTurn:      { id:"leftTurn",      name:"Left Turn (Follow)",   category:"turns",      level:"Beginner",     timing:"1-2-3",           description:"An inside turn. Lead uses their left hand (holding follow's right hand) and guides it across the follow's own body and around her head — the opposite arc to the right turn — signalling her to turn counter-clockwise. Led on count 6, turn executes on 1-2-3.", video:"https://www.addicted2salsa.com/videos/cross-body-lead-with-turn/", youtube:"t-xMpLfSXKQ", leadsTo:["basic","crossbody","handshakeTurn"] },
+  openBreak:     { id:"openBreak",     name:"Open Break",           category:"foundation", level:"Beginner",     timing:"1-2-3 / 5-6-7",  description:"Both partners break away from each other on count 1, creating space and tension before reconnecting. A useful reset between patterns.", video:"https://www.addicted2salsa.com/videos/basic-salsa-dance-elements-and-steps/", leadsTo:["basic","rightTurn","leftTurn","hammerlock"] },
+  sidestep:      { id:"sidestep",      name:"Side Step / Suzie Q",  category:"footwork",   level:"Beginner",     timing:"1-2-3 / 5-6-7",  description:"Lateral weight shifts with hip styling. A simple but effective way to add flavor and change direction without leaving the basic framework.", video:"https://www.addicted2salsa.com/videos/free-salsa-video-lesson-for-beginners/", leadsTo:["basic","crossbody"] },
+  diledobleCBL:  { id:"diledobleCBL",  name:"Double Cross Body",    category:"variations", level:"Intermediate", timing:"1…7 / 1…7",       description:"Two cross body leads performed back-to-back in succession. The second begins as the first completes, creating a flowing, traveling pattern.", video:"https://www.addicted2salsa.com/videos/cross-body-lead-180-pocket-version/", leadsTo:["basic","hammerlock","CBLwithTurn"] },
+  CBLwithTurn:   { id:"CBLwithTurn",   name:"CBL with Follow Turn", category:"turns",      level:"Intermediate", timing:"1-2-3-4-5-6-7",  description:"A cross body lead where the follow performs a 360° right (outside) turn on counts 5-6-7 after she has already crossed in front of the lead.", video:"https://www.addicted2salsa.com/videos/cross-body-lead-360/", leadsTo:["basic","hammerlock","copa"] },
+  hammerlock:    { id:"hammerlock",    name:"Hammerlock",           category:"patterns",   level:"Intermediate", timing:"1-2-3-4-5-6-7",  description:"Follow's right arm is guided up and behind her own back into a locked position. Typically entered from a cross body lead. Never force the arm — use gentle, clear guidance.", video:"https://www.addicted2salsa.com/videos/basic-salsa-dance-hammerlock-hand-flick/", leadsTo:["basic","crossbody","hamlockTurn"] },
+  hamlockTurn:   { id:"hamlockTurn",   name:"Hammerlock Turn Out",  category:"turns",      level:"Intermediate", timing:"5-6-7",           description:"From the hammerlock, lead guides follow's trapped arm upward and forward, releasing her into a clockwise spin back to open position.", video:"https://www.addicted2salsa.com/videos/salsa-dance-getting-out-of-hammerlocks-video/", leadsTo:["basic","crossbody","copa"] },
+  copa:          { id:"copa",          name:"Copa (In-and-Out)",    category:"patterns",   level:"Intermediate", timing:"1-2-3-4-5-6-7",  description:"Lead steps across the follow's path on count 1, creating a side-by-side hip check. Both partners step apart and back together. Also called the 'in-and-out'.", video:"https://www.addicted2salsa.com/videos/copa-check-salsa-bounce/", leadsTo:["basic","crossbody","dip"] },
+  comb:          { id:"comb",          name:"The Comb",             category:"styling",    level:"Intermediate", timing:"5-6-7",           description:"Lead gently guides the follow's right hand (in lead's left hand) up and over the follow's own head in a smooth combing motion, then returns to hold.", video:"https://www.addicted2salsa.com/videos/styling-for-basic-salsa-turns/", leadsTo:["basic","crossbody","rightTurn"] },
+  handshakeTurn: { id:"handshakeTurn", name:"Handshake Turn",       category:"turns",      level:"Intermediate", timing:"5-6-7",           description:"Lead switches to a right-hand-to-right-hand (handshake) grip, then guides the follow into a left (inside) turn with the right hand. Ends in an open handshake hold.", video:"https://www.addicted2salsa.com/videos/salsa-dance-double-hand-turn-and-the-tai-chi-flip/", leadsTo:["basic","crossbody","enchufa"] },
+  enchufa:       { id:"enchufa",       name:"Enchufla",             category:"patterns",   level:"Intermediate", timing:"1-2-3-4-5-6-7",  description:"Lead and follow simultaneously pass each other and exchange sides — lead turns right, follow turns left. A staple of Casino/Cuban salsa also widely used in LA style.", video:"https://dancepapi.com/videos/enchufla-cuban-salsa/", leadsTo:["basic","dileQue","crossbody"] },
+  dileQue:       { id:"dileQue",       name:"Dile Que No",          category:"foundation", level:"Beginner",     timing:"1-2-3-4-5-6-7",  description:"The Cuban-style cross body lead and the backbone of Casino salsa. Lead redirects the follow across in front, both ending face-to-face again. Literally: 'tell her no'.", video:"https://dancepapi.com/videos/enchufla-cuban-salsa/", leadsTo:["basic","enchufa","crossbody"] },
+  dip:           { id:"dip",           name:"Dip",                  category:"styling",    level:"Intermediate", timing:"1-2-3 hold",      description:"Lead supports follow with right arm around her back as she leans back dramatically on count 1. Requires mutual trust and a well-prepared follow. Never force a dip.", video:"https://www.addicted2salsa.com/dance/how-to-do-salsa-dips-the-way-the-ladies-like-it/", leadsTo:["basic","crossbody"] },
 };
 
-let selectedId = "basic";
-let filterCat = "all";
+let selectedId  = "basic";
+let filterCat   = "all";
+let filterLevel = "all";
 
-function getColor(move) {
-  return categories[move.category].color;
+function getColor(m) { return categories[m.category].color; }
+
+/* ── FILTERS ── */
+function setCat(cat, btn, isMobile) {
+  filterCat = cat;
+  document.querySelectorAll('#cat-chips .cat-chip').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#mob-cat-row .mob-chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const sel = isMobile
+    ? document.querySelector('#cat-chips .cat-chip[data-cat="' + cat + '"]')
+    : document.querySelector('#mob-cat-row .mob-chip[data-cat="' + cat + '"]');
+  if (sel) sel.classList.add('active');
+  renderGrid();
 }
 
-function setFilter(cat, btn, isMobile) {
-  filterCat = cat;
-  // sync sidebar buttons
-  document.querySelectorAll('.sidebar .filter-btn').forEach(b => b.classList.remove('active'));
-  // sync mobile buttons
-  document.querySelectorAll('.mob-filter-btn').forEach(b => b.classList.remove('active'));
+function setLevel(lvl, btn, isMobile) {
+  filterLevel = lvl;
+  document.querySelectorAll('#level-toggles .level-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#mob-lvl-row .mob-chip').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  // also activate matching button in the other bar
-  if (isMobile) {
-    document.querySelectorAll('.sidebar .filter-btn').forEach(b => { if (b.dataset.cat === cat) b.classList.add('active'); });
-  } else {
-    document.querySelectorAll('.mob-filter-btn').forEach((b, i) => {
-      const cats = ['all','foundation','turns','patterns','footwork','variations','styling'];
-      if (cats[i] === cat) b.classList.add('active');
-    });
-  }
+  const sel = isMobile
+    ? document.querySelector('#level-toggles .level-btn[data-lvl="' + lvl + '"]')
+    : document.querySelector('#mob-lvl-row .mob-chip[data-lvl="' + lvl + '"]');
+  if (sel) sel.classList.add('active');
   renderGrid();
 }
 
@@ -358,148 +459,155 @@ function selectMove(id) {
   selectedId = id;
   renderDetail();
   renderGrid();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.querySelector('.main').scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+/* ── VIDEO ── */
+// Called from onclick on .yt-thumb — replaces thumbnail with live iframe
+function playVideo(id, src) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const iframe = document.createElement('div');
+  iframe.className = 'yt-iframe';
+  iframe.innerHTML = '<iframe src="' + src + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+  el.parentNode.replaceChild(iframe, el);
+}
+
+function makeThumbPlayer(ytId, start, end, label, pid) {
+  const watchUrl = 'https://www.youtube.com/watch?v=' + ytId + (start != null ? '&t=' + start : '');
+  let embed = 'https://www.youtube.com/embed/' + ytId + '?rel=0&modestbranding=1&autoplay=1';
+  if (start != null) embed += '&start=' + start;
+  if (end   != null) embed += '&end='   + end;
+  const thumb = 'https://img.youtube.com/vi/' + ytId + '/maxresdefault.jpg';
+  const stampHTML = (start != null)
+    ? '<div class="yt-stamp">starts ' + Math.floor(start/60) + ':' + String(start%60).padStart(2,'0') + '</div>'
+    : '';
+  const labelHTML = label ? '<div class="yt-vid-label">' + label + '</div>' : '';
+
+  return labelHTML +
+    '<div id="' + pid + '" class="yt-thumb" onclick="playVideo(\'' + pid + '\',\'' + embed + '\')">' +
+      '<img src="' + thumb + '" alt="tutorial">' +
+      '<div class="yt-play-overlay">' +
+        '<div class="yt-play-circle"><div class="yt-play-arrow"></div></div>' +
+      '</div>' +
+      stampHTML +
+    '</div>' +
+    '<a href="' + watchUrl + '" target="_blank" rel="noopener" class="yt-link">↗ open in YouTube</a>';
+}
+
+/* ── RENDER DETAIL ── */
 function renderDetail() {
-  const move = moves[selectedId];
-  const cat = categories[move.category];
+  const move  = moves[selectedId];
+  const cat   = categories[move.category];
   const color = cat.color;
-  const card = document.getElementById('detail-card');
+  const card  = document.getElementById('detail-card');
 
-  card.style.background = `linear-gradient(135deg, ${color}10 0%, rgba(224,64,251,0.04) 100%)`;
-  card.style.border = `1px solid ${color}40`;
-
+  card.style.background = 'linear-gradient(135deg,' + color + '10 0%,rgba(224,64,251,0.04) 100%)';
+  card.style.border = '1px solid ' + color + '40';
   document.getElementById('detail-dot').style.background = color;
   document.getElementById('detail-cat').style.color = color;
-  document.getElementById('detail-cat').textContent = `${cat.label} · ${move.level}`;
+  document.getElementById('detail-cat').textContent = cat.label + ' · ' + move.level;
   document.getElementById('detail-name').textContent = move.name;
   document.getElementById('detail-desc').textContent = move.description;
   document.getElementById('detail-timing').textContent = move.timing;
 
-  const videoContainer = document.getElementById('video-container');
-  videoContainer.innerHTML = '';
-
-  function makeThumbPlayer(ytId, start, end, label, containerId) {
-    let watchUrl = `https://www.youtube.com/watch?v=${ytId}`;
-    if (start !== undefined) watchUrl += `&t=${start}`;
-    let embedSrc = `https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1&autoplay=1`;
-    if (start !== undefined) embedSrc += `&start=${start}`;
-    if (end   !== undefined) embedSrc += `&end=${end}`;
-    const thumb = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
-    const timeLabel = label ? `<div class="yt-video-label">${label}</div>` : '';
-    const stampBadge = start !== undefined
-      ? `<div class="yt-stamp">starts ${Math.floor(start/60)}:${String(start%60).padStart(2,'0')}</div>`
-      : '';
-    const iframeHTML = `<div class="yt-iframe-wrap"><iframe src="${embedSrc}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
-    return `
-      ${timeLabel}
-      <div id="${containerId}" class="yt-thumb-wrap" onclick="document.getElementById('${containerId}').outerHTML='${iframeHTML.replace(/'/g,"\\'")}'" >
-        <img src="${thumb}" alt="${move.name} tutorial">
-        <div class="yt-play-overlay">
-          <div class="yt-play-circle"><div class="yt-play-arrow"></div></div>
-        </div>
-        ${stampBadge}
-      </div>
-      <a href="${watchUrl}" target="_blank" rel="noopener" class="yt-open-link">↗ open in YouTube</a>`;
-  }
-
+  // Video
+  const vc = document.getElementById('video-container');
+  vc.innerHTML = '';
   if (move.youtube) {
-    const hasSecond = !!move.youtube2;
-    videoContainer.innerHTML = makeThumbPlayer(move.youtube, undefined, undefined, hasSecond ? 'Video 1' : '', 'yt-player-1');
-    if (hasSecond) {
-      const startSec = move.youtube2Start;
-      const endSec   = move.youtube2End;
-      const timeLabel = (startSec !== undefined)
-        ? `Video 2 · from ${Math.floor(startSec/60)}:${String(startSec%60).padStart(2,'0')}${endSec !== undefined ? ' – '+Math.floor(endSec/60)+':'+String(endSec%60).padStart(2,'0') : ''}`
+    const two = !!move.youtube2;
+    vc.innerHTML = makeThumbPlayer(move.youtube, null, null, two ? 'Video 1' : '', 'yt1');
+    if (two) {
+      const s = move.youtube2Start, e = move.youtube2End;
+      const lbl = (s != null)
+        ? 'Video 2 · ' + Math.floor(s/60) + ':' + String(s%60).padStart(2,'0') +
+          (e != null ? ' – ' + Math.floor(e/60) + ':' + String(e%60).padStart(2,'0') : '')
         : 'Video 2';
-      videoContainer.innerHTML += `<div style="margin-top:16px;">` +
-        makeThumbPlayer(move.youtube2, startSec, endSec, timeLabel, 'yt-player-2') +
-        `</div>`;
+      const d = document.createElement('div');
+      d.className = 'yt-second';
+      d.innerHTML = makeThumbPlayer(move.youtube2, s, e, lbl, 'yt2');
+      vc.appendChild(d);
     }
   } else if (move.video) {
-    videoContainer.innerHTML = `
-      <a href="${move.video}" target="_blank" rel="noopener"
-        style="display:inline-flex;align-items:center;gap:7px;padding:6px 14px;border-radius:20px;background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.35);color:#FF6B35;font-size:12px;text-decoration:none;font-family:Georgia,serif;transition:all 0.15s;"
-        onmouseover="this.style.background='rgba(255,107,53,0.22)'"
-        onmouseout="this.style.background='rgba(255,107,53,0.1)'">
-        ▶ Watch tutorial video
-      </a>`;
+    vc.innerHTML = '<a href="' + move.video + '" target="_blank" rel="noopener" class="watch-btn">▶ Watch tutorial video</a>';
   }
 
-  const flowsContainer = document.getElementById('flows-container');
-  flowsContainer.innerHTML = '';
-  move.leadsTo.forEach(toId => {
-    const toMove = moves[toId];
-    const toColor = getColor(toMove);
+  // Flows
+  const fc = document.getElementById('flows-container');
+  fc.innerHTML = '';
+  move.leadsTo.forEach(tid => {
+    const tm = moves[tid];
+    const c = getColor(tm);
     const pill = document.createElement('button');
     pill.className = 'flow-pill';
-    pill.textContent = toMove.name;
-    pill.style.borderColor = `${toColor}60`;
-    pill.style.color = toColor;
-    pill.style.backgroundColor = `${toColor}15`;
-    pill.onmouseenter = () => pill.style.backgroundColor = `${toColor}30`;
-    pill.onmouseleave = () => pill.style.backgroundColor = `${toColor}15`;
-    pill.onclick = () => selectMove(toId);
-    flowsContainer.appendChild(pill);
+    pill.textContent = tm.name;
+    pill.style.cssText = 'border-color:' + c + '60;color:' + c + ';background:' + c + '15';
+    pill.onmouseenter = () => { pill.style.background = c + '2e'; };
+    pill.onmouseleave = () => { pill.style.background = c + '15'; };
+    pill.onclick = () => selectMove(tid);
+    fc.appendChild(pill);
   });
 }
 
+/* ── RENDER GRID ── */
 function renderGrid() {
-  const current = moves[selectedId];
-  const highlighted = new Set([selectedId, ...current.leadsTo]);
+  const cur  = moves[selectedId];
+  const hi   = new Set([selectedId, ...cur.leadsTo]);
 
-  const filtered = Object.values(moves).filter(m => filterCat === 'all' || m.category === filterCat);
-  const label = filterCat === 'all'
-    ? `All Moves — ${Object.keys(moves).length} total`
-    : `${categories[filterCat].label} — ${filtered.length} moves`;
-  document.getElementById('grid-label').textContent = label;
+  const filtered = Object.values(moves).filter(m =>
+    (filterCat   === 'all' || m.category === filterCat) &&
+    (filterLevel === 'all' || m.level    === filterLevel)
+  );
+
+  let lbl = '';
+  if (filterCat !== 'all')   lbl  = categories[filterCat].label;
+  if (filterLevel !== 'all') lbl  = (lbl ? lbl + ' · ' : '') + filterLevel;
+  if (!lbl) lbl = 'All Moves';
+  document.getElementById('grid-label').textContent = lbl + ' — ' + filtered.length;
 
   const grid = document.getElementById('moves-grid');
   grid.innerHTML = '';
-
   filtered.forEach(move => {
-    const color = getColor(move);
-    const isSelected = move.id === selectedId;
-    const isConnected = !isSelected && highlighted.has(move.id);
-    const isDimmed = !highlighted.has(move.id) && !isSelected;
+    const color   = getColor(move);
+    const isSel   = move.id === selectedId;
+    const isConn  = !isSel && hi.has(move.id);
+    const isDim   = !hi.has(move.id);
 
     const card = document.createElement('div');
-    card.className = 'move-card' + (isSelected ? ' selected' : '') + (isDimmed ? ' dimmed' : '');
-    card.style.borderColor = isSelected ? color : isConnected ? `${color}50` : '#1e1e2e';
-    card.style.background = isSelected ? `${color}20` : isConnected ? `${color}08` : '#0d0d18';
+    card.className = 'move-card' + (isDim ? ' dimmed' : '');
+    card.style.borderColor = isSel ? color : isConn ? color + '55' : '#1e1e2e';
+    card.style.background  = isSel ? color + '22' : isConn ? color + '0a' : '#0d0d18';
     card.onclick = () => selectMove(move.id);
 
-    if (isSelected) {
+    if (isSel) {
       const dot = document.createElement('div');
       dot.className = 'card-indicator';
-      dot.style.background = color;
-      dot.style.boxShadow = `0 0 6px ${color}`;
+      dot.style.cssText = 'background:' + color + ';box-shadow:0 0 6px ' + color;
       card.appendChild(dot);
-    } else if (isConnected) {
-      const arrow = document.createElement('div');
-      arrow.className = 'card-arrow';
-      arrow.style.color = color;
-      arrow.textContent = '→';
-      card.appendChild(arrow);
+    } else if (isConn) {
+      const arr = document.createElement('div');
+      arr.className = 'card-arrow';
+      arr.style.color = color;
+      arr.textContent = '→';
+      card.appendChild(arr);
     }
 
-    card.innerHTML += `
-      <div class="card-level-row">
-        <div class="card-level-dot" style="background:${move.level === 'Beginner' ? '#FF6B35' : '#E040FB'}"></div>
-        <span class="card-level-text">${move.level}</span>
-      </div>
-      <div class="card-name ${isSelected ? 'selected-name' : ''}">${move.name}</div>
-      <div class="card-cat">${categories[move.category].icon} ${categories[move.category].label}</div>
-    `;
-
+    const inner = document.createElement('div');
+    inner.innerHTML =
+      '<div class="card-level-row">' +
+        '<div class="card-level-dot" style="background:' + (move.level === 'Beginner' ? '#FF6B35' : '#E040FB') + '"></div>' +
+        '<span class="card-level-text">' + move.level + '</span>' +
+      '</div>' +
+      '<div class="card-name' + (isSel ? ' sel' : '') + '">' + move.name + '</div>' +
+      '<div class="card-cat">' + categories[move.category].icon + ' ' + categories[move.category].label + '</div>';
+    card.appendChild(inner);
     grid.appendChild(card);
   });
 }
 
-// Set counts
+// Counts
 Object.keys(categories).forEach(cat => {
-  const el = document.getElementById(`count-${cat}`);
+  const el = document.getElementById('count-' + cat);
   if (el) el.textContent = Object.values(moves).filter(m => m.category === cat).length;
 });
 document.getElementById('count-all').textContent = Object.keys(moves).length;
