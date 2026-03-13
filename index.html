@@ -38,40 +38,16 @@
 
   /* SIDEBAR */
   .sidebar {
-    width: 240px; min-width: 240px;
+    width: 220px; min-width: 220px;
     background: #0d0d18;
     border-right: 1px solid #1e1e30;
     padding: 20px 14px;
     overflow-y: auto;
   }
-  .sidebar-section-label {
-    font-size: 10px; letter-spacing: 3px; color: #555;
-    text-transform: uppercase; margin-bottom: 10px;
-  }
-  .filter-btn {
-    display: flex; align-items: center; gap: 8px;
-    width: 100%; padding: 6px 10px; border-radius: 4px;
-    margin-bottom: 4px; cursor: pointer;
-    background: transparent; border: 1px solid transparent;
-    font-size: 12px; color: #777; font-family: Georgia, serif;
-    text-align: left; transition: all 0.15s;
-  }
-  .filter-btn:hover { color: #ccc; background: rgba(255,255,255,0.04); }
-  .filter-btn.active { background: rgba(255,107,53,0.15); border-color: #FF6B35; color: #FF6B35; }
-  .filter-btn .count { margin-left: auto; color: #444; font-size: 11px; }
-
-  .legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 12px; color: #777; }
-  .legend-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
-
-  .info-box {
-    padding: 12px; background: rgba(255,107,53,0.06);
-    border: 1px solid rgba(255,107,53,0.15); border-radius: 6px;
-    font-size: 11px; color: #886655; line-height: 1.6;
-  }
-  .info-box strong { color: #FF6B35; display: block; margin-bottom: 4px; }
+  .mobile-filter-bar { display: none; }
 
   /* MAIN */
-  .main { flex: 1; padding: 24px; overflow-y: auto; }
+  .main { flex: 1; padding: 24px; overflow-y: auto; min-width: 0; }
 
   /* DETAIL CARD */
   .detail-card {
@@ -84,7 +60,7 @@
   .detail-dot { width: 10px; height: 10px; border-radius: 50%; }
   .detail-cat-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; }
   .detail-name { font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 8px; }
-  .detail-desc { font-size: 14px; color: #b09080; line-height: 1.6; max-width: 500px; }
+  .detail-desc { font-size: 14px; color: #b09080; line-height: 1.6; max-width: 560px; }
   .timing-box {
     background: rgba(0,0,0,0.3); border: 1px solid #2a2a3a;
     border-radius: 8px; padding: 12px 18px; text-align: center; min-width: 100px;
@@ -100,6 +76,64 @@
     font-family: Georgia, serif; background: transparent;
   }
 
+  /* VIDEO OUTER — sits below detail card */
+  .video-outer {
+    width: 1024px;
+    max-width: 100%;
+    margin-bottom: 24px;
+  }
+  /* thumb wrapper: fixed 1024×576 (16:9) on desktop */
+  .yt-thumb-wrap {
+    position: relative; border-radius: 10px; overflow: hidden;
+    border: 1px solid #2a2a3a; cursor: pointer;
+    width: 1024px; max-width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+  }
+  .yt-thumb-wrap img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .yt-play-overlay {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.35); pointer-events: none;
+    transition: background 0.15s;
+  }
+  .yt-thumb-wrap:hover .yt-play-overlay { background: rgba(0,0,0,0.1); }
+  .yt-play-circle {
+    width: 80px; height: 80px; background: rgba(255,0,0,0.9);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  }
+  .yt-play-arrow {
+    width: 0; height: 0; border-style: solid;
+    border-width: 15px 0 15px 30px;
+    border-color: transparent transparent transparent #fff;
+    margin-left: 6px;
+  }
+  .yt-stamp {
+    position: absolute; bottom: 10px; right: 12px;
+    background: rgba(0,0,0,0.75); color: #fff;
+    font-size: 12px; padding: 3px 8px; border-radius: 4px;
+    font-family: Georgia, serif;
+  }
+  .yt-open-link {
+    display: block; text-align: right; margin-top: 5px;
+    font-size: 12px; color: #666; text-decoration: none;
+  }
+  .yt-open-link:hover { color: #FF6B35; }
+  .yt-video-label {
+    font-size: 11px; color: #888; margin-bottom: 6px; letter-spacing: 0.5px;
+  }
+  /* iframe player replaces thumb, same size */
+  .yt-iframe-wrap {
+    position: relative; width: 1024px; max-width: 100%;
+    aspect-ratio: 16/9; border-radius: 10px; overflow: hidden;
+    border: 1px solid #2a2a3a;
+  }
+  .yt-iframe-wrap iframe {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
+  }
+
   /* GRID */
   .grid-label { font-size: 10px; letter-spacing: 3px; color: #444; text-transform: uppercase; margin-bottom: 16px; }
   .moves-grid {
@@ -113,8 +147,6 @@
     transition: all 0.2s;
   }
   .move-card:hover { border-color: rgba(255,255,255,0.2); }
-  .move-card.selected { }
-  .move-card.connected { }
   .move-card.dimmed { opacity: 0.3; }
   .card-indicator {
     position: absolute; top: 8px; right: 8px;
@@ -139,9 +171,53 @@
   .seq-step { color: #888; }
   .seq-arrow { color: #333; margin: 0 4px; }
 
-  @media (max-width: 600px) {
-    .layout { flex-direction: column; }
-    .sidebar { width: 100%; min-width: 0; }
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    .layout { flex-direction: column; height: auto; overflow: visible; }
+
+    .sidebar { display: none; }
+    .mobile-filter-bar {
+      display: flex; overflow-x: auto; gap: 8px;
+      padding: 10px 14px; background: #0d0d18;
+      border-bottom: 1px solid #1e1e30;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .mobile-filter-bar::-webkit-scrollbar { display: none; }
+    .mobile-filter-bar .mob-filter-btn {
+      white-space: nowrap; flex-shrink: 0;
+      padding: 6px 14px; border-radius: 20px;
+      border: 1px solid #2a2a3a; font-size: 12px;
+      color: #777; background: transparent;
+      font-family: Georgia, serif; cursor: pointer;
+    }
+    .mobile-filter-bar .mob-filter-btn.active {
+      background: rgba(255,107,53,0.15); border-color: #FF6B35; color: #FF6B35;
+    }
+
+    .header { padding: 14px 16px; }
+    .header h1 { font-size: 20px; }
+    .header p { font-size: 12px; }
+
+    .main { padding: 12px; }
+
+    .detail-card { padding: 14px; margin-bottom: 12px; }
+    .detail-card-inner { flex-direction: column; gap: 8px; }
+    .detail-name { font-size: 18px; }
+    .detail-desc { font-size: 13px; max-width: 100%; }
+    .timing-box { align-self: flex-start; padding: 8px 14px; }
+
+    /* Video: full width on mobile */
+    .video-outer { width: 100%; margin-bottom: 16px; }
+    .yt-thumb-wrap { width: 100%; }
+    .yt-play-circle { width: 52px; height: 52px; }
+    .yt-play-arrow { border-width: 10px 0 10px 20px; margin-left: 4px; }
+    .yt-iframe-wrap { width: 100%; }
+
+    .moves-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
+    .move-card { padding: 10px 12px; }
+
+    .sequences-box { display: none; }
   }
 </style>
 </head>
@@ -154,6 +230,18 @@
 </div>
 
 <div class="layout">
+
+  <!-- Mobile filter bar (hidden on desktop) -->
+  <div class="mobile-filter-bar" id="mobile-filter-bar">
+    <button class="mob-filter-btn active" onclick="setFilter('all', this, true)">All</button>
+    <button class="mob-filter-btn" onclick="setFilter('foundation', this, true)">⬡ Foundation</button>
+    <button class="mob-filter-btn" onclick="setFilter('turns', this, true)">↺ Turns</button>
+    <button class="mob-filter-btn" onclick="setFilter('patterns', this, true)">◈ Patterns</button>
+    <button class="mob-filter-btn" onclick="setFilter('footwork', this, true)">◇ Footwork</button>
+    <button class="mob-filter-btn" onclick="setFilter('variations', this, true)">⬡ Variations</button>
+    <button class="mob-filter-btn" onclick="setFilter('styling', this, true)">✦ Styling</button>
+  </div>
+
   <div class="sidebar">
     <div class="sidebar-section-label" style="margin-bottom:10px">Filter by Type</div>
     <button class="filter-btn active" data-cat="all" onclick="setFilter('all', this)">All Moves <span class="count" id="count-all"></span></button>
@@ -178,30 +266,26 @@
 
   <div class="main">
     <div class="detail-card" id="detail-card">
-      <div style="display:flex;gap:20px;align-items:flex-start;">
-        <!-- Left: info -->
-        <div style="flex:1;min-width:0;">
-          <div class="detail-card-inner">
-            <div>
-              <div class="detail-badge">
-                <div class="detail-dot" id="detail-dot"></div>
-                <span class="detail-cat-label" id="detail-cat"></span>
-              </div>
-              <div class="detail-name" id="detail-name"></div>
-              <div class="detail-desc" id="detail-desc"></div>
-            </div>
-            <div class="timing-box">
-              <div class="timing-label">Timing</div>
-              <div class="timing-value" id="detail-timing"></div>
-            </div>
+      <div class="detail-card-inner">
+        <div>
+          <div class="detail-badge">
+            <div class="detail-dot" id="detail-dot"></div>
+            <span class="detail-cat-label" id="detail-cat"></span>
           </div>
-          <div class="flows-label">Flows into →</div>
-          <div class="flows-container" id="flows-container"></div>
+          <div class="detail-name" id="detail-name"></div>
+          <div class="detail-desc" id="detail-desc"></div>
         </div>
-        <!-- Right: video -->
-        <div id="video-container" style="width:320px;min-width:220px;flex-shrink:0;"></div>
+        <div class="timing-box">
+          <div class="timing-label">Timing</div>
+          <div class="timing-value" id="detail-timing"></div>
+        </div>
       </div>
+      <div class="flows-label">Flows into →</div>
+      <div class="flows-container" id="flows-container"></div>
     </div>
+
+    <!-- Video section: full width below detail card, capped at 1024px on desktop -->
+    <div id="video-container" class="video-outer"></div>
 
     <div class="grid-label" id="grid-label"></div>
     <div class="moves-grid" id="moves-grid"></div>
@@ -251,10 +335,22 @@ function getColor(move) {
   return categories[move.category].color;
 }
 
-function setFilter(cat, btn) {
+function setFilter(cat, btn, isMobile) {
   filterCat = cat;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  // sync sidebar buttons
+  document.querySelectorAll('.sidebar .filter-btn').forEach(b => b.classList.remove('active'));
+  // sync mobile buttons
+  document.querySelectorAll('.mob-filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+  // also activate matching button in the other bar
+  if (isMobile) {
+    document.querySelectorAll('.sidebar .filter-btn').forEach(b => { if (b.dataset.cat === cat) b.classList.add('active'); });
+  } else {
+    document.querySelectorAll('.mob-filter-btn').forEach((b, i) => {
+      const cats = ['all','foundation','turns','patterns','footwork','variations','styling'];
+      if (cats[i] === cat) b.classList.add('active');
+    });
+  }
   renderGrid();
 }
 
@@ -290,40 +386,34 @@ function renderDetail() {
     let embedSrc = `https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1&autoplay=1`;
     if (start !== undefined) embedSrc += `&start=${start}`;
     if (end   !== undefined) embedSrc += `&end=${end}`;
-    const thumb = `https://img.youtube.com/vi/${ytId}/mqdefault.jpg`;
-    const timeLabel = label ? `<div style="font-size:11px;color:#888;margin-bottom:6px;letter-spacing:0.5px;">${label}</div>` : '';
+    const thumb = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
+    const timeLabel = label ? `<div class="yt-video-label">${label}</div>` : '';
     const stampBadge = start !== undefined
-      ? `<div style="position:absolute;bottom:8px;right:10px;background:rgba(0,0,0,0.75);color:#fff;font-size:11px;padding:2px 7px;border-radius:4px;font-family:Georgia,serif;">starts ${Math.floor(start/60)}:${String(start%60).padStart(2,'0')}</div>`
+      ? `<div class="yt-stamp">starts ${Math.floor(start/60)}:${String(start%60).padStart(2,'0')}</div>`
       : '';
+    const iframeHTML = `<div class="yt-iframe-wrap"><iframe src="${embedSrc}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
     return `
       ${timeLabel}
-      <div id="${containerId}" style="position:relative;border-radius:10px;overflow:hidden;border:1px solid #2a2a3a;">
-        <img src="${thumb}" alt="${move.name} tutorial" style="width:100%;display:block;cursor:pointer;"
-             onclick="document.getElementById('${containerId}').innerHTML='<div style=\\'position:relative;padding-bottom:56.25%;height:0;overflow:hidden;\\'><iframe src=\\'${embedSrc}\\' style=\\'position:absolute;top:0;left:0;width:100%;height:100%;border:0;\\' allow=\\'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\\' allowfullscreen></iframe></div>'">
-        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.35);pointer-events:none;">
-          <div style="width:56px;height:56px;background:rgba(255,0,0,0.88);border-radius:50%;display:flex;align-items:center;justify-content:center;">
-            <div style="width:0;height:0;border-style:solid;border-width:11px 0 11px 22px;border-color:transparent transparent transparent #fff;margin-left:4px;"></div>
-          </div>
+      <div id="${containerId}" class="yt-thumb-wrap" onclick="document.getElementById('${containerId}').outerHTML='${iframeHTML.replace(/'/g,"\\'")}'" >
+        <img src="${thumb}" alt="${move.name} tutorial">
+        <div class="yt-play-overlay">
+          <div class="yt-play-circle"><div class="yt-play-arrow"></div></div>
         </div>
         ${stampBadge}
       </div>
-      <div style="text-align:right;margin-top:4px;">
-        <a href="${watchUrl}" target="_blank" rel="noopener" style="font-size:11px;color:#666;text-decoration:none;" onmouseover="this.style.color='#FF6B35'" onmouseout="this.style.color='#666'">↗ open in YouTube</a>
-      </div>`;
+      <a href="${watchUrl}" target="_blank" rel="noopener" class="yt-open-link">↗ open in YouTube</a>`;
   }
 
   if (move.youtube) {
     const hasSecond = !!move.youtube2;
-    videoContainer.innerHTML += `<div style="margin-top:4px;">` +
-      makeThumbPlayer(move.youtube, undefined, undefined, hasSecond ? 'Video 1' : '', 'yt-player-1') +
-      `</div>`;
+    videoContainer.innerHTML = makeThumbPlayer(move.youtube, undefined, undefined, hasSecond ? 'Video 1' : '', 'yt-player-1');
     if (hasSecond) {
       const startSec = move.youtube2Start;
       const endSec   = move.youtube2End;
       const timeLabel = (startSec !== undefined)
         ? `Video 2 · from ${Math.floor(startSec/60)}:${String(startSec%60).padStart(2,'0')}${endSec !== undefined ? ' – '+Math.floor(endSec/60)+':'+String(endSec%60).padStart(2,'0') : ''}`
         : 'Video 2';
-      videoContainer.innerHTML += `<div style="margin-top:12px;">` +
+      videoContainer.innerHTML += `<div style="margin-top:16px;">` +
         makeThumbPlayer(move.youtube2, startSec, endSec, timeLabel, 'yt-player-2') +
         `</div>`;
     }
